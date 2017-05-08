@@ -29,8 +29,8 @@ public class ComparatorMain {
             ArrayList<String> file1List=new ArrayList<>();
             ArrayList<String> file2List=new ArrayList<>();
             PrintWriter printWriter=new PrintWriter("filesInBoth.txt");
-            BufferedReader bufferedReaderFile1 = new BufferedReader(new FileReader("CCOutput.txt"));
-            BufferedReader bufferedReaderFile2 = new BufferedReader(new FileReader("farima_10k.tokens_preprocessedclones_index_WITH_FILTER.txt"));
+            BufferedReader bufferedReaderFile1 = new BufferedReader(new FileReader("farima_10k.tokens_preprocessedclones_index_WITH_FILTER.txt"));
+            BufferedReader bufferedReaderFile2 = new BufferedReader(new FileReader("CCOutput.txt"));
             String line="";
             while ((line=bufferedReaderFile1.readLine())!=null) {
                 file1List.add(line);
