@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
@@ -13,7 +15,8 @@ public class ComparatorMain {
     public ComparatorMain(){
         try {
             String lineMainInput = "";
-            BufferedReader bufferedReaderMainInput = new BufferedReader(new FileReader("farima_10k_preprocessed.txt"));//to see skewness and kurtosis
+            String mainFileName=new File(Paths.get("./input/main_file/").toString()).listFiles()[0].getName();
+            BufferedReader bufferedReaderMainInput = new BufferedReader(new FileReader(Paths.get("./input/main_file/").toString()+"/"+mainFileName));//to see skewness and kurtosis
 
             while ((lineMainInput = bufferedReaderMainInput.readLine()) != null) {
                 mainFileList.add(lineMainInput);
@@ -28,9 +31,11 @@ public class ComparatorMain {
         try {
             ArrayList<String> file1List=new ArrayList<>();
             ArrayList<String> file2List=new ArrayList<>();
-            PrintWriter printWriter=new PrintWriter("filesInBoth.txt");
-            BufferedReader bufferedReaderFile1 = new BufferedReader(new FileReader("farima_10k.tokens_preprocessedclones_index_WITH_FILTER.txt"));
-            BufferedReader bufferedReaderFile2 = new BufferedReader(new FileReader("CCOutput.txt"));
+            PrintWriter printWriter=new PrintWriter("./output/filesInBoth.txt");
+            String firstFileName=new File(Paths.get("./input/first_file/").toString()).listFiles()[0].getName();
+            BufferedReader bufferedReaderFile1 = new BufferedReader(new FileReader(Paths.get("./input/first_file").toString()+"/"+firstFileName));
+            String secondFileName=new File(Paths.get("./input/second_file/").toString()).listFiles()[0].getName();
+            BufferedReader bufferedReaderFile2 = new BufferedReader(new FileReader(Paths.get("./input/second_file").toString()+"/"+secondFileName));
             String line="";
             while ((line=bufferedReaderFile1.readLine())!=null) {
                 file1List.add(line);
