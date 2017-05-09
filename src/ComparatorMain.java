@@ -14,25 +14,25 @@ import java.util.LinkedHashSet;
 public class ComparatorMain {
 
     HashMap<String,Double[]> mainFileList=new HashMap<>();
-    public ComparatorMain(){
-        try {
-            String lineMainInput = "";
-            String mainFileName=new File(Paths.get("./input/main_file/").toString()).listFiles()[0].getName();
-            BufferedReader bufferedReaderMainInput = new BufferedReader(new FileReader(Paths.get("./input/main_file/").toString()+"/"+mainFileName));//to see skewness and kurtosis
-
-            while ((lineMainInput = bufferedReaderMainInput.readLine()) != null) {
-                String[] separatedLineFromMeta = lineMainInput.split("@#@");
-                String projId = separatedLineFromMeta[0].split(",")[0];
-                String fileId = separatedLineFromMeta[0].split(",")[1];
-                double skewness = Double.parseDouble(separatedLineFromMeta[0].split(",")[11]);
-                double kurtosis = Double.parseDouble(separatedLineFromMeta[0].split(",")[12]);
-                mainFileList.put(projId+","+fileId,new Double[]{skewness,kurtosis});
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+//    public ComparatorMain(){
+//        try {
+//            String lineMainInput = "";
+//            String mainFileName=new File(Paths.get("./input/main_file/").toString()).listFiles()[0].getName();
+//            BufferedReader bufferedReaderMainInput = new BufferedReader(new FileReader(Paths.get("./input/main_file/").toString()+"/"+mainFileName));//to see skewness and kurtosis
+//
+//            while ((lineMainInput = bufferedReaderMainInput.readLine()) != null) {
+//                String[] separatedLineFromMeta = lineMainInput.split("@#@");
+//                String projId = separatedLineFromMeta[0].split(",")[0];
+//                String fileId = separatedLineFromMeta[0].split(",")[1];
+//                double skewness = Double.parseDouble(separatedLineFromMeta[0].split(",")[11]);
+//                double kurtosis = Double.parseDouble(separatedLineFromMeta[0].split(",")[12]);
+//                mainFileList.put(projId+","+fileId,new Double[]{skewness,kurtosis});
+//            }
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
     public static void main(String[] args) {
         ComparatorMain comparatorMain=new ComparatorMain();
         try {
@@ -76,20 +76,20 @@ public class ComparatorMain {
                     if ((lineFile1.equals(lineFile2))
                             ||(file1[0].equals(file2[2])&&file1[1].equals(file2[3])&&
                             file1[2].equals(file2[0])&&file1[3].equals(file2[1]))){
-                        PairInfo pairInfo=comparatorMain.getSkewnessKurtosis(lineFile1);
-                        querySkewness=pairInfo.querySkewness;
-                        queryKurtosis=pairInfo.queryKurtosis;
-                        candidateKurtosis=pairInfo.candidateKurtosis;
-                        candidateSkewness=pairInfo.candidateSkewness;
-                        double skewnessDiff=Math.abs(querySkewness-candidateSkewness);
-                        double kurtosisDiff=Math.abs(queryKurtosis-candidateKurtosis);
-                        if (skewnessDiff>maxDiffSkewnessClone) maxDiffSkewnessClone=skewnessDiff;
-                        if (skewnessDiff<minDiffSkewnessClone) minDiffSkewnessClone=skewnessDiff;
-                        if (kurtosisDiff>maxDiffKurtosisClone) maxDiffKurtosisClone=kurtosisDiff;
-                        if (kurtosisDiff<minDiffKurtosisClone) minDiffKurtosisClone=kurtosisDiff;
-                        String analysisOutput=querySkewness+","+candidateSkewness+","+skewnessDiff+","
-                                        +queryKurtosis+","+candidateKurtosis+","+kurtosisDiff;
-                        printWriter.append(lineFile1+" "+analysisOutput+System.lineSeparator());
+//                        PairInfo pairInfo=comparatorMain.getSkewnessKurtosis(lineFile1);
+//                        querySkewness=pairInfo.querySkewness;
+//                        queryKurtosis=pairInfo.queryKurtosis;
+//                        candidateKurtosis=pairInfo.candidateKurtosis;
+//                        candidateSkewness=pairInfo.candidateSkewness;
+//                        double skewnessDiff=Math.abs(querySkewness-candidateSkewness);
+//                        double kurtosisDiff=Math.abs(queryKurtosis-candidateKurtosis);
+//                        if (skewnessDiff>maxDiffSkewnessClone) maxDiffSkewnessClone=skewnessDiff;
+//                        if (skewnessDiff<minDiffSkewnessClone) minDiffSkewnessClone=skewnessDiff;
+//                        if (kurtosisDiff>maxDiffKurtosisClone) maxDiffKurtosisClone=kurtosisDiff;
+//                        if (kurtosisDiff<minDiffKurtosisClone) minDiffKurtosisClone=kurtosisDiff;
+//                        String analysisOutput=querySkewness+","+candidateSkewness+","+skewnessDiff+","
+//                                        +queryKurtosis+","+candidateKurtosis+","+kurtosisDiff;
+                        printWriter.append(lineFile1+" "+System.lineSeparator());//analysisOutput+System.lineSeparator());
                         lineFound=true;
                         break;
                     }
@@ -97,13 +97,13 @@ public class ComparatorMain {
 
                 if(!lineFound) {
                     System.out.println(lineFile1);
-                    PairInfo pairInfo=comparatorMain.getSkewnessKurtosis(lineFile1);
-                    double skewnessDiffNonClone=Math.abs(pairInfo.querySkewness-pairInfo.candidateSkewness);
-                    double kurtosisDiffNonClone=Math.abs(pairInfo.queryKurtosis-pairInfo.candidateKurtosis);
-                    if (skewnessDiffNonClone>maxDiffSkewnessNotClone) maxDiffSkewnessNotClone=skewnessDiffNonClone;
-                    if (skewnessDiffNonClone<minDiffSkewnessNotClone) minDiffSkewnessNotClone=skewnessDiffNonClone;
-                    if (kurtosisDiffNonClone>maxDiffKurtosisNotClone) maxDiffKurtosisNotClone=kurtosisDiffNonClone;
-                    if (kurtosisDiffNonClone<minDiffKurtosisNotClone) minDiffKurtosisNotClone=kurtosisDiffNonClone;
+//                    PairInfo pairInfo=comparatorMain.getSkewnessKurtosis(lineFile1);
+//                    double skewnessDiffNonClone=Math.abs(pairInfo.querySkewness-pairInfo.candidateSkewness);
+//                    double kurtosisDiffNonClone=Math.abs(pairInfo.queryKurtosis-pairInfo.candidateKurtosis);
+//                    if (skewnessDiffNonClone>maxDiffSkewnessNotClone) maxDiffSkewnessNotClone=skewnessDiffNonClone;
+//                    if (skewnessDiffNonClone<minDiffSkewnessNotClone) minDiffSkewnessNotClone=skewnessDiffNonClone;
+//                    if (kurtosisDiffNonClone>maxDiffKurtosisNotClone) maxDiffKurtosisNotClone=kurtosisDiffNonClone;
+//                    if (kurtosisDiffNonClone<minDiffKurtosisNotClone) minDiffKurtosisNotClone=kurtosisDiffNonClone;
                 }
             }
             System.out.println("For clones:");
@@ -124,14 +124,14 @@ public class ComparatorMain {
         }
     }
 
-    PairInfo getSkewnessKurtosis(String clonePair){
-        PairInfo pairInfo = new PairInfo();
-        pairInfo.querySkewness = mainFileList.get(clonePair.split(",")[0]+","+clonePair.split(",")[1])[0];
-        pairInfo.queryKurtosis = mainFileList.get(clonePair.split(",")[0]+","+clonePair.split(",")[1])[1];
-        pairInfo.candidateSkewness = mainFileList.get(clonePair.split(",")[2]+","+clonePair.split(",")[3])[0];
-        pairInfo.candidateKurtosis = mainFileList.get(clonePair.split(",")[2]+","+clonePair.split(",")[3])[1];
-        return pairInfo;
-    }
+//    PairInfo getSkewnessKurtosis(String clonePair){
+//        PairInfo pairInfo = new PairInfo();
+//        pairInfo.querySkewness = mainFileList.get(clonePair.split(",")[0]+","+clonePair.split(",")[1])[0];
+//        pairInfo.queryKurtosis = mainFileList.get(clonePair.split(",")[0]+","+clonePair.split(",")[1])[1];
+//        pairInfo.candidateSkewness = mainFileList.get(clonePair.split(",")[2]+","+clonePair.split(",")[3])[0];
+//        pairInfo.candidateKurtosis = mainFileList.get(clonePair.split(",")[2]+","+clonePair.split(",")[3])[1];
+//        return pairInfo;
+//    }
 
     private class PairInfo{
         double querySkewness;
