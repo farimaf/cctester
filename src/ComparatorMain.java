@@ -43,16 +43,16 @@ public class ComparatorMain {
             BufferedReader bufferedReaderFile1 = new BufferedReader(new FileReader(Paths.get("./input/first_file").toString()+"/"+firstFileName));
             String secondFileName=new File(Paths.get("./input/second_file/").toString()).listFiles()[0].getName();
             BufferedReader bufferedReaderFile2 = new BufferedReader(new FileReader(Paths.get("./input/second_file").toString()+"/"+secondFileName));
-            String line="";
-            while ((line=bufferedReaderFile1.readLine())!=null) {
-                file1List.add(line);
-            }
-            line="";
-            while ((line=bufferedReaderFile2.readLine())!=null) {
-                file2List.add(line);
-            }
-            bufferedReaderFile1.close();
-            bufferedReaderFile2.close();
+//            String line="";
+//            while ((line=bufferedReaderFile1.readLine())!=null) {
+//                file1List.add(line);
+//            }
+//            line="";
+//            while ((line=bufferedReaderFile2.readLine())!=null) {
+//                file2List.add(line);
+//            }
+//            bufferedReaderFile1.close();
+//            bufferedReaderFile2.close();
 
             double minDiffSkewnessClone=1000;
             double maxDiffSkewnessClone=-1000;
@@ -64,14 +64,15 @@ public class ComparatorMain {
             double minDiffKurtosisNotClone=1000;
             double maxDiffKurtosisNotClone=-1000;
 
-            for(String lineFile1:file1List){
+            String lineFile1="",lineFile2="";
+            while ((lineFile1=bufferedReaderFile1.readLine())!=null) {
                 double querySkewness=0;
                 double queryKurtosis=0;
                 double candidateSkewness=0;
                 double candidateKurtosis=0;
                 boolean lineFound=false;
                 String[] file1=lineFile1.split(",");
-                for(String lineFile2:file2List){
+                while ((lineFile2=bufferedReaderFile2.readLine())!=null) {
                     String[] file2=lineFile2.split(",");
                     if ((lineFile1.equals(lineFile2))
                             ||(file1[0].equals(file2[2])&&file1[1].equals(file2[3])&&
@@ -106,6 +107,8 @@ public class ComparatorMain {
 //                    if (kurtosisDiffNonClone<minDiffKurtosisNotClone) minDiffKurtosisNotClone=kurtosisDiffNonClone;
                 }
             }
+            bufferedReaderFile1.close();
+            bufferedReaderFile2.close();
             System.out.println("For clones:");
             System.out.println("max diff kurtosis: "+maxDiffKurtosisClone);
             System.out.println("min diff kurtosis: "+minDiffKurtosisClone);
