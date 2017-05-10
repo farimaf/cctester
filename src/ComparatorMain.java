@@ -66,12 +66,14 @@ public class ComparatorMain {
 
             String lineFile1="",lineFile2="";
             while ((lineFile1=bufferedReaderFile1.readLine())!=null) {
+                System.out.println(lineFile1);
                 double querySkewness=0;
                 double queryKurtosis=0;
                 double candidateSkewness=0;
                 double candidateKurtosis=0;
                 boolean lineFound=false;
                 String[] file1=lineFile1.split(",");
+                bufferedReaderFile2 = new BufferedReader(new FileReader(Paths.get("./input/second_file").toString()+"/"+secondFileName));
                 while ((lineFile2=bufferedReaderFile2.readLine())!=null) {
                     String[] file2=lineFile2.split(",");
                     if ((lineFile1.equals(lineFile2))
@@ -95,7 +97,7 @@ public class ComparatorMain {
                         break;
                     }
                 }
-
+                bufferedReaderFile2.close();
                 if(!lineFound) {
                     System.out.println(lineFile1);
 //                    PairInfo pairInfo=comparatorMain.getSkewnessKurtosis(lineFile1);
@@ -108,7 +110,7 @@ public class ComparatorMain {
                 }
             }
             bufferedReaderFile1.close();
-            bufferedReaderFile2.close();
+            //bufferedReaderFile2.close();
             System.out.println("For clones:");
             System.out.println("max diff kurtosis: "+maxDiffKurtosisClone);
             System.out.println("min diff kurtosis: "+minDiffKurtosisClone);
