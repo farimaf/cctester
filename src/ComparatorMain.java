@@ -54,7 +54,8 @@ public class ComparatorMain {
 //            }
 //            bufferedReaderFile1.close();
 //            bufferedReaderFile2.close();
-
+            LinkedHashSet<String> file1Set=new LinkedHashSet<>();
+            LinkedHashSet<String> file2Set=new LinkedHashSet<>();
             double minDiffSkewnessClone=1000;
             double maxDiffSkewnessClone=-1000;
             double minDiffKurtosisClone=1000;
@@ -66,20 +67,31 @@ public class ComparatorMain {
             double maxDiffKurtosisNotClone=-1000;
 
             String lineFile1="",lineFile2="";
+            int range=10000;
             while ((lineFile1=bufferedReaderFile1.readLine())!=null) {
-                System.out.println(lineFile1);
-                double querySkewness=0;
-                double queryKurtosis=0;
-                double candidateSkewness=0;
-                double candidateKurtosis=0;
-                boolean lineFound=false;
-                String[] file1=lineFile1.split(",");
-                bufferedReaderFile2 = new BufferedReader(new FileReader(Paths.get("./input/second_file").toString()+"/"+secondFileName));
-                while ((lineFile2=bufferedReaderFile2.readLine())!=null) {
-                    String[] file2=lineFile2.split(",");
-                    if ((lineFile1.equals(lineFile2))
-                            ||(file1[0].equals(file2[2])&&file1[1].equals(file2[3])&&
-                            file1[2].equals(file2[0])&&file1[3].equals(file2[1]))){
+                if(Integer.parseInt(lineFile1.split(",")[0])<=range) file1Set.add(lineFile1);
+                while ((lineFile1 = bufferedReaderFile1.readLine()) != null&&Integer.parseInt(lineFile1.split(",")[0])<=range) {
+                    file1Set.add(lineFile1);
+                }
+                while ((lineFile2 = bufferedReaderFile2.readLine()) != null&&Integer.parseInt(lineFile2.split(",")[0])<=range) {
+                    file2Set.add(lineFile2);
+                }
+                range+=10000;
+                double querySkewness = 0;
+                double queryKurtosis = 0;
+                double candidateSkewness = 0;
+                double candidateKurtosis = 0;
+                for (String line : file1Set) {
+                    System.out.println(line);
+                    boolean lineFound = false;
+                    String[] file1 = line.split(",");
+                    //bufferedReaderFile2 = new BufferedReader(new FileReader(Paths.get("./input/second_file").toString() + "/" + secondFileName));
+                    if (file2Set.contains(line)||file2Set.contains(file1[2]+","+file1[3]+","+file1[0]+","+file1[1])){
+//                    for (String line2 : file2Set) {
+//                        String[] file2 = line2.split(",");
+//                        if ((line.equals(line2))
+//                                || (file1[0].equals(file2[2]) && file1[1].equals(file2[3]) &&
+//                                file1[2].equals(file2[0]) && file1[3].equals(file2[1]))) {
 //                        PairInfo pairInfo=comparatorMain.getSkewnessKurtosis(lineFile1);
 //                        querySkewness=pairInfo.querySkewness;
 //                        queryKurtosis=pairInfo.queryKurtosis;
@@ -93,14 +105,14 @@ public class ComparatorMain {
 //                        if (kurtosisDiff<minDiffKurtosisClone) minDiffKurtosisClone=kurtosisDiff;
 //                        String analysisOutput=querySkewness+","+candidateSkewness+","+skewnessDiff+","
 //                                        +queryKurtosis+","+candidateKurtosis+","+kurtosisDiff;
-                        printWriterBoth.append(lineFile1+" "+System.lineSeparator());//analysisOutput+System.lineSeparator());
-                        lineFound=true;
-                        break;
-                    }
-                }
-                bufferedReaderFile2.close();
-                if(!lineFound) {
-                    printWriterMissed.append(lineFile1+System.lineSeparator());
+                            printWriterBoth.append(line + " " + System.lineSeparator());//analysisOutput+System.lineSeparator());
+                            lineFound = true;
+                            //break;
+                        }
+
+
+                    if (!lineFound) {
+                        printWriterMissed.append(line + System.lineSeparator());
 //                    PairInfo pairInfo=comparatorMain.getSkewnessKurtosis(lineFile1);
 //                    double skewnessDiffNonClone=Math.abs(pairInfo.querySkewness-pairInfo.candidateSkewness);
 //                    double kurtosisDiffNonClone=Math.abs(pairInfo.queryKurtosis-pairInfo.candidateKurtosis);
@@ -108,9 +120,15 @@ public class ComparatorMain {
 //                    if (skewnessDiffNonClone<minDiffSkewnessNotClone) minDiffSkewnessNotClone=skewnessDiffNonClone;
 //                    if (kurtosisDiffNonClone>maxDiffKurtosisNotClone) maxDiffKurtosisNotClone=kurtosisDiffNonClone;
 //                    if (kurtosisDiffNonClone<minDiffKurtosisNotClone) minDiffKurtosisNotClone=kurtosisDiffNonClone;
+                    }
                 }
+                file1Set.clear();
+                file2Set.clear();
+//                file1Set=new LinkedHashSet<>();
+//                file2Set=new LinkedHashSet<>();
             }
             bufferedReaderFile1.close();
+            bufferedReaderFile2.close();
             //bufferedReaderFile2.close();
             System.out.println("For clones:");
             System.out.println("max diff kurtosis: "+maxDiffKurtosisClone);
