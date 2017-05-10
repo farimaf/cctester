@@ -38,7 +38,8 @@ public class ComparatorMain {
         try {
             LinkedHashSet<String> file1List=new LinkedHashSet<>();
             LinkedHashSet<String> file2List=new LinkedHashSet<>();
-            PrintWriter printWriter=new PrintWriter("./output/filesInBoth.txt");
+            PrintWriter printWriterBoth=new PrintWriter("./output/filesInBoth.txt");
+            PrintWriter printWriterMissed=new PrintWriter("./output/missedFiles.txt");
             String firstFileName=new File(Paths.get("./input/first_file/").toString()).listFiles()[0].getName();
             BufferedReader bufferedReaderFile1 = new BufferedReader(new FileReader(Paths.get("./input/first_file").toString()+"/"+firstFileName));
             String secondFileName=new File(Paths.get("./input/second_file/").toString()).listFiles()[0].getName();
@@ -92,14 +93,14 @@ public class ComparatorMain {
 //                        if (kurtosisDiff<minDiffKurtosisClone) minDiffKurtosisClone=kurtosisDiff;
 //                        String analysisOutput=querySkewness+","+candidateSkewness+","+skewnessDiff+","
 //                                        +queryKurtosis+","+candidateKurtosis+","+kurtosisDiff;
-                        printWriter.append(lineFile1+" "+System.lineSeparator());//analysisOutput+System.lineSeparator());
+                        printWriterBoth.append(lineFile1+" "+System.lineSeparator());//analysisOutput+System.lineSeparator());
                         lineFound=true;
                         break;
                     }
                 }
                 bufferedReaderFile2.close();
                 if(!lineFound) {
-                    System.out.println(lineFile1);
+                    printWriterMissed.append(lineFile1+System.lineSeparator());
 //                    PairInfo pairInfo=comparatorMain.getSkewnessKurtosis(lineFile1);
 //                    double skewnessDiffNonClone=Math.abs(pairInfo.querySkewness-pairInfo.candidateSkewness);
 //                    double kurtosisDiffNonClone=Math.abs(pairInfo.queryKurtosis-pairInfo.candidateKurtosis);
@@ -122,7 +123,8 @@ public class ComparatorMain {
             System.out.println("min diff kurtosis: "+minDiffKurtosisNotClone);
             System.out.println("max diff skewness: "+maxDiffSkewnessNotClone);
             System.out.println("min diff skewness: "+minDiffSkewnessNotClone);
-            printWriter.close();
+            printWriterBoth.close();
+            printWriterMissed.close();
         }
         catch (Exception e){
             e.printStackTrace();
