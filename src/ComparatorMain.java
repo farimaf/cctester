@@ -67,7 +67,7 @@ public class ComparatorMain {
             double maxDiffKurtosisNotClone=-1000;
 
             String lineFile1="",lineFile2="";
-            int range=10000;
+            int range=5000;
             while ((lineFile1=bufferedReaderFile1.readLine())!=null) {
                 if(Integer.parseInt(lineFile1.split(",")[0])<=range) file1Set.add(lineFile1);
                 while ((lineFile1 = bufferedReaderFile1.readLine()) != null&&Integer.parseInt(lineFile1.split(",")[0])<=range) {
@@ -76,7 +76,7 @@ public class ComparatorMain {
                 while ((lineFile2 = bufferedReaderFile2.readLine()) != null&&Integer.parseInt(lineFile2.split(",")[0])<=range) {
                     file2Set.add(lineFile2);
                 }
-                range+=10000;
+                range+=5000;
                 double querySkewness = 0;
                 double queryKurtosis = 0;
                 double candidateSkewness = 0;
